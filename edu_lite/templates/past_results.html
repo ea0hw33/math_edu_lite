@@ -11,16 +11,10 @@
 
 {% for answer in results %}
         {% if answer[1] == answer[2] %}
-                <p style="color:green">{{ answer[0] }}</p>
+                <p style="color:green">{{answer[0]}} = {{answer[1]}} Ответ ученика: {{answer[2]}}</p>
         {% else %}
-                <p style="color:red">{{ answer[0] }}</p>
+                <p style="color:red">{{answer[0]}} = {{answer[1]}} Ответ ученика: {{answer[2]}}</p>
         {% endif %}
 {% endfor %}
 <hr>
-
-<div class="container">
-<a href="/topic"><p>Продолжить тестирование</p></a>
-<hr>
-<a href="/logout"><p>Закончить работу</p></a>
-</div>
 {% endblock %}

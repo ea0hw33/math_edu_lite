@@ -4,43 +4,35 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="/static/style.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js">
+    $(document).ready ( function () {
+    $(document).on ("click", "find_past_attempts", function (e) {
+        if(e.target.type =="button")
+        {
+            url_redirect({url: "/past_attempts/results",
+                            method: "post",
+                            data: {"attempt_id": e.target.id}
+                         });
+        }
+    });
+});
+</script>
+
 <p style="color:green">{{ message }}</p>
 
-
-<div class="container">
-<h3>Загрузка вопросов</h3>
-<form action="" method="POST" enctype="multipart/form-data">
-    {{ form_file.hidden_tag() }}
-    <p>
-        <b>Тест</b><br>
-        {{ form_file.test() }}
-        {{ wtf.form_field(form_file.file) }}
-    </p>
-    <p>
-        <input type="submit" value="Загрузить">
-    </p>
-</form>
-</div>
-<hr>
-<div class="container">
-<h3>Добавить тест</h3>
-<form action="" method="POST" name="test">
-    {{ form_new_test.hidden_tag() }}
-    <p>
-        {{ wtf.form_field(form_new_test.test_name) }}
-    </p>
-    <p>
-        <input type="submit" value="Добавить">
-    </p>
-</form>
-</div>
-<hr>
 <div class="container">
 <h3>Зарегистрировать пользователя</h3>
-<form action="" method="POST" name="registration">
-    {{ form_reg.hidden_tag() }}
+    <a href="/past_attempts">Прошлые попытки</a>
+    <form action="" method="POST" name="registration">
+        {{ form_reg.hidden_tag() }}
     <p>
         {{ wtf.form_field(form_reg.name) }}<br>
+        {{ wtf.form_field(form_reg.second_name) }}<br>
+        {{ wtf.form_field(form_reg.surname) }}<br>
+        {{ wtf.form_field(form_reg.login) }}<br>
         {{ wtf.form_field(form_reg.password) }}<br>
     </p>
     <p>{{ wtf.form_field(form_reg.password_repeat) }} </p>

@@ -9,7 +9,30 @@
 <link rel="stylesheet" href="/static/style.css">
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
-<script type="text/javascript">
+<script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js">
+    $(document).ready ( function () {
+    $(document).on ("click", "#results", function (e) {
+        if(e.target.type =="button")
+        {
+            url_redirect({url: "/past_attempts/results",
+                            method: "post",
+                            data: {"attempt_id": e.target.id}
+                         });
+        }
+    });
+});
+    function url_redirect(options){
+         var $form = $("<form />");
+
+         $form.attr("action",options.url);
+         $form.attr("method",options.method);
+         $form.attr("target","_blank");
+         for (var data in options.data)
+         $form.append('<input type="hidden" name="'+data+'" value="'+options.data[data]+'" />');
+
+         $("body").append($form);
+         $form.submit();
+    }
     $(function() {
         $('.filter').click(function() {
             $.ajax({
@@ -20,11 +43,15 @@
                 success: function(response) {
                     console.log(response)
                     var results = JSON.parse(response)
-                    var output = ''
+                    $('#results').html('')
                     $.each(results, function(index, value) {
-                        output = output +'<br>' + '<br>' + value.start + '<br>' + value.end
+                        var output = '<br>' + value.start + '<br>' + value.end + '<br>' + value.topic + '<br>' + value.subtopic + '<br>';
+                        var id = value.id
+                        $('#results').append(output)
+                        $('#results').append('<input type="button" id=' + id + ' value="button1"/>');
                     });
-                    $('#results').html(output); 
+
+
                 },
                 error: function(error) {
                     console.log(error);
@@ -38,12 +65,8 @@
 <form action="" method="POST" name="test">
    {{ form.hidden_tag() }}
     <p>
-        Выберите тест:<br>
-        {{ form.test() }}<br>
         Выберите студента:<br>
         {{ form.student() }}<br>
-        Выберите дату:<br>
-        {{ form.date(class="datepicker") }}
     </p>
     <p>
         <button class="filter" type="button">Отфильтровать</button>

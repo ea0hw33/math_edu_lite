@@ -1,35 +1,115 @@
 {% extends"bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 <h1>{{ test_name }}</h1>
+
 <script type="text/javascript">
+
+document.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        var hangoutButton = document.getElementById("buttright");
+        hangoutButton.click();
+    }
+});
+
+document.onkeydown = function (event)
+{
+console.log(event);
+
+if(event.code == 'ArrowRight')
+                        {
+                        document.getElementById("buttright").onclick = function() {buttright(questions)};
+                        }
+
+}
+
+function codeAddress()
+        {
+            document.getElementById(1).style.display="block";
+        }
+        window.onload = codeAddress;
+
+
+function showquestions(hh, questions)
+{
+    for (let i = 1; i <= questions; i++) {
+         document.getElementById(i).style.display="none";
+    }
+    document.getElementById(hh).style.display="block";
+}
+
+function buttright(questions)
+{
+    for (let i = 1; i <= questions; i++) {
+
+        if(document.getElementById(i).style.display == 'block')
+                    {
+                        let yy = i;
+                        document.getElementById(i).style.display="none";
+
+                        yy = Number(yy) + 1;
+                        if (yy > questions)
+                        {
+                            yy = questions;
+                        }
+                        document.getElementById(yy).style.display="block";
+                        break;
+                    }
+
+    }
+}
+
+
+
+
+function buttleft(questions)
+{
+
+    for (let i = 1; i <= questions; i++) {
+
+        if(document.getElementById(i).style.display == 'block')
+                    {
+                        let yy = i;
+                        document.getElementById(i).style.display="none";
+
+                        yy = Number(yy) - 1;
+                        if (yy == 0)
+                        {
+                            yy = 1;
+                        }
+                        document.getElementById(yy).style.display="block";
+                        break;
+                    }
+
+    }
+}
 
 function checkInputs(form){
     var questList = [];
     var answList = [];
     var questions = document.getElementsByTagName('ul');
- 
+
     for(var i=0; i<questions.length; i++){
         answers = questions[i].getElementsByTagName('input');
         for(var j=0; j<answers.length; j++){
             if(answers[j].checked){
                 answList.push(answers[j].id);
             }
-        } 
+        }
         if(answList.length > 0){
             questList.push(questions[i]);
         }
         answList = [];
     }
     if(questList.length == 0){
-        alert('Ты что, дебил??');
+        alert('Введите ответ в поле');
     var questList = [];
     return false;
     }
     else if(questList.length < questions.length){
-        alert('Ты что, дебил??');
+        alert('Введите ответ в поле');
     var questList = [];
     return false;
     }
@@ -39,33 +119,1585 @@ function checkInputs(form){
     }
 }
 
+alertFunction = () => {
+  document.getElementById("buttq").click();
+}
+
+var endtime = 1
+
+timer = () => {
+    document.getElementById("timer").innerHTML = parseInt(endtime - Number(Date.now())/1000) + ' c.';
+
+}
+
+window.onload = function() {
+   endtime = Number(document.getElementById("endtime").innerHTML);
+   setTimeout(alertFunction, (endtime-Number(Date.now())/1000)*1000);
+   setInterval(timer, 100)
+  }
+
+
 </script>
 
-<style> label{ max-width:95%;vertical-align:top} input{vertical-align:top}</style>
+<style>
 
-<form id="attempt" action="" method="POST" name="answer">
-    
-        {{ form.hidden_tag() }}
-            
-            {% for item in questions %}
-                
-                {% if item[2] == 0 %}
-                    {{ form.add_choices(item[0]) }}
-                    <h3>{{ item[1] }}</h3>
-                    <p>{{ form.answer() }}</p>
-                {% else %}
-                    {{ form.add_multiple_choices(item[0]) }}
-                    <h3>{{ item[1] }}</h3>
-                    {{ form.multi_answer() }}
-                {% endif %}
-                  
-            {% endfor %}
-    
-        <p>
-            <input type="button" value="Отправить" onclick="checkInputs(form);">
-        </p>
-    
-</form>
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
 
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 800px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+@media screen and (max-width: 1750px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 800px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+@media screen and (max-width: 1560px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 800px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+@media screen and (max-width: 1400px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 800px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+@media screen and (max-width: 1320px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 800px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+@media screen and (max-width: 1200px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 800px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 800px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+@media screen and (max-width: 998px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 700px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 700px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 700px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+@media screen and (max-width: 768px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 600px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 600px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 600px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+@media screen and (max-width: 620px)
+{
+label
+    {
+        max-width:95%;
+        vertical-align:top;
+    }
+input
+    {
+        vertical-align:top;
+    }
+
+#buttq
+        {
+                background-color: #000;
+                border: none;
+                color: white;
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                cursor: pointer;
+
+                position: absolute;
+                left: 50%;
+                top: 70%;
+                -webkit-transform: translate(-50%, -70%);
+                -moz-transform: translate(-50%, -70%);
+                -ms-transform: translate(-50%, -70%);
+                -o-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+        }
+
+#contentbutt
+        {
+                border: 1px solid black;
+                width: 1000px;
+                height: 70px;
+        }
+#buttqnumb
+        {
+                border: 1px solid black;
+                width: 520px;
+                height: 75px;
+                position: absolute;
+                left: 50%;
+                top: 10%;
+                -webkit-transform: translate(-50%, -10%);
+                -moz-transform: translate(-50%, -10%);
+                -ms-transform: translate(-50%, -10%);
+                -o-transform: translate(-50%, -10%);
+                transform: translate(-50%, -10%);
+
+
+
+        }
+#buttqnummb
+        {
+            padding:5px;
+            text-align: center;
+
+        }
+#namequestions
+            {
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                -webkit-transform: translate(-50%, -20%);
+                -moz-transform: translate(-50%, -20%);
+                -ms-transform: translate(-50%, -20%);
+                -o-transform: translate(-50%, -20%);
+                transform: translate(-50%, -20%);
+            }
+#formquestions
+            {
+
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                -webkit-transform: translate(-50%, -40%);
+                -moz-transform: translate(-50%, -40%);
+                -ms-transform: translate(-50%, -40%);
+                -o-transform: translate(-50%, -40%);
+                transform: translate(-50%, -40%);
+            }
+#content
+        {
+                width: 520px;
+                height: 650px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+#questions
+        {
+                border: 1px solid black;
+                width: 520px;
+                height: 350px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        }
+
+
+
+
+#buttleft
+        {
+
+            position: absolute;
+            left: 10%;
+            top: 70%;
+            -webkit-transform: translate(-10%, -70%);
+            -moz-transform: translate(-10%, -70%);
+            -ms-transform: translate(-10%, -70%);
+            -o-transform: translate(-10%, -70%);
+            transform: translate(-10%, -70%);
+        }
+
+#buttright
+{
+    position: absolute;
+    left: 90%;
+    top: 70%;
+    -webkit-transform: translate(-90%, -70%);
+    -moz-transform: translate(-90%, -70%);
+    -ms-transform: translate(-90%, -70%);
+    -o-transform: translate(-90%, -70%);
+    transform: translate(-90%, -70%);
+}
+#timer, #endtimer
+{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    -webkit-transform: translate(-50%, -90%);
+    -moz-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    -o-transform: translate(-50%, -90%);
+    transform: translate(-50%, -90%);
+
+
+}
+}
+
+</style>
+
+
+
+<div id="content">
+
+<div id="buttqnumb">
+                        <div id="buttqnummb">
+
+
+                                {% for item in questions %}
+                                <input
+                                style="
+                                background-color: #000;
+                                border: none;
+                                color: white;
+                                width: 30px;
+                                height: 30px;
+                                text-align: center;
+                                text-decoration: none;
+                                display: inline-block;
+                                font-size: 12px;
+                                cursor: pointer;"
+                                onclick="showquestions('{{loop.index}}', '{{ questions|length }}')" type="submit" value="{{loop.index}}">
+                                {% endfor %}
+                        </div>
+                    </div>
+
+                    <div id="questions">
+
+                                            <input
+                                                    id="buttleft"
+                                            style="
+                                            background-color: #000;
+                                            border: none;
+                                            color: white;
+                                            width: 50px;
+                                            height: 50px;
+                                            text-align: center;
+                                            text-decoration: none;
+                                            display: inline-block;
+                                            font-size: 12px;
+                                            cursor: pointer;"
+                                            onclick="buttleft('{{ questions|length }}')" type="submit" value="ᐊ">
+
+
+
+                                                        <form id="attempt" action="" method="POST" name="answer">
+                                                                        {{ form.hidden_tag() }}
+                                                                            {% for item in questions %}
+
+                                                                            <div id="{{ loop.index }}" style="display: none;">
+                                                                                <div id="namequestions"> {{ item[1] }} </div>
+                                                                                <div id="formquestions" >{{ form.field_answer(id=item[0]) }}</div>
+                                                                            </div>
+
+                                                                            {% endfor %}
+                                                            <div id="endtime" hidden>{{ endtime }}</div>
+                                                            <div id="timer">0</div>
+
+
+                                                            <input onclick="form.submit()" id="buttq" type="button" value="Отправить">
+                                                        </form>
+
+
+
+
+                                            <input
+                                                    id="buttright"
+                                            style="
+                                            background-color: #000;
+                                            border: none;
+                                            color: white;
+                                            width: 50px;
+                                            height: 50px;
+                                            text-align: center;
+                                            text-decoration: none;
+                                            display: inline-block;
+                                            font-size: 12px;
+                                            cursor: pointer;"
+                                            onclick="buttright('{{ questions|length }}')" type="submit" value="ᐅ">
+
+                    </div>
+</div>
 
 {% endblock %}

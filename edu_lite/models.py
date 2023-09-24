@@ -1,14 +1,23 @@
 from edu_lite import db
 
 
-class Tests(db.Model):
-    """Tests model."""
+class Topics(db.Model):
+    """Topics model."""
 
-    __tablename__ = 'tests'
+    __tablename__ = 'topics'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
 
+
+class Subtopics(db.Model):
+    """Subtopic model"""
+    __tablename__ = 'subtopics'
+
+
+    id = db.Column(db.Integer, primary_key=True)
+    topic_id = db.Column(db.Integer, db.ForeignKey("topics.id"))
+    name = db.Column(db.String)
 
 class Questions(db.Model):
     """Questions model."""
@@ -17,21 +26,8 @@ class Questions(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.String)
-    test_id = db.Column(db.Integer, db.ForeignKey("tests.id"))
-    ismultiple = db.Column(db.Integer)
-
-
-
-class Answers(db.Model):
-    """Answers model."""
-
-    __tablename__ = 'answers'
-
-    id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.String)
-    question_id = db.Column(db.Integer, db.ForeignKey("questions.id"))
-    iscorrect = db.Column(db.Integer)
-
+    subtopic_id = db.Column(db.Integer, db.ForeignKey("subtopics.id"))
+    answer = db.Column(db.String)
 
 
 class Attempts(db.Model):
@@ -43,7 +39,8 @@ class Attempts(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey("students.id"))
     starttime = db.Column(db.DateTime)
     endtime = db.Column(db.DateTime)
-    test_id = db.Column(db.Integer, db.ForeignKey("tests.id"))
+    topic_id = db.Column(db.Integer, db.ForeignKey("topics.id"))
+    subtopic_id = db.Column(db.Integer, db.ForeignKey("subtopics.id"))
 
 
 
@@ -55,7 +52,7 @@ class Results(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     attempt_id = db.Column(db.Integer, db.ForeignKey("attempts.id"))
     question_id = db.Column(db.Integer, db.ForeignKey("questions.id"))
-    fact_id = db.Column(db.Integer)
+    fact_answer = db.Column(db.String)
 
 
 
@@ -65,13 +62,19 @@ class Students(db.Model):
     __tablename__ = 'students'
 
     id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String)
     name = db.Column(db.String)
+    second_name = db.Column(db.String)
+    surname = db.Column(db.String)
     password = db.Column(db.String)
     isadmin = db.Column(db.Integer)
 
 
-    def __init__(self, name, password, isadmin):
+    def __init__(self, name, second_name, surname, login, password, isadmin):
         self.name = name
+        self.second_name = second_name
+        self.surname = surname
+        self.login = login
         self.password = password
         self.isadmin = isadmin
         
